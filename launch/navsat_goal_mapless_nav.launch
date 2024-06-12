@@ -1,0 +1,16 @@
+<launch>
+  <!-- NavSat Transform Node -->
+  <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_node" respawn="true">
+    <rosparam command="load" file="$(find husky_gps_navigation)/params/navsat_transform.yaml" />
+    <!-- Remappings -->
+    <remap from="/imu/data" to="/imu/data" />
+    <remap from="/gps/fix" to="/navsat/fix" />
+    <remap from="/odometry/filtered" to="/odometry/filtered" />
+  </node>
+
+  <!-- Run Move Base -->
+  <include file="$(find husky_navigation)/launch/move_base.launch">
+    <arg name="no_static_map" value="true"/>
+  </include>
+
+</launch>
